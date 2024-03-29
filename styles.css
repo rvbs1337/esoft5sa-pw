@@ -1,16 +1,3 @@
-/* A partir do código pokemon-responsivo.html fazer as seguintes alterações:
-
-* Mover os estilos para um arquivo css e importa-lo no html; OK
-* Adicionar mais uma imagem do Squirtle na seção de Informações. Link 1;  OK
-* A nova imagem precisará de padding para ficar semelhante a imagem antiga; OK
-* Deixar essas duas imagens do Squirtle em uma linha, utilizando flex; ok
-* Alinhar as imagens com um espaçamento igual entre elas; ok
-* Quebrar linha das imagens quando não houver mais largura disponível; ok
-* Adicionar flexbox na lista da seção de curiosidades;ok
-* Distanciar os itens da lista de curiosidades utilizando um gap de 12px; ok
-* Adicionar flexbox no footer, remover a margin-bottom dos <p> e distanciar os itens com gap.
-* Remover o text-align: center do footer e centralizar com flex; */
-
 /* Reset de estilos para garantir consistência em diferentes navegadores */
 body,
 h1,
@@ -40,9 +27,12 @@ body {
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 45vw 45vw;
+    grid-gap: 20px;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    animation: fadeIn 4s forwards
 }
 
 main>section {
@@ -51,7 +41,6 @@ main>section {
 
 main section,
 main article {
-    width: 80vw;
     color: black;
     background-color: #fff;
     padding: 20px;
@@ -60,7 +49,6 @@ main article {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
 }
 
 section h1,
@@ -75,9 +63,9 @@ article h3 {
     margin-bottom: 10px;
 }
 
-/* p {
+p {
     margin-bottom: 16px;
-} */
+}
 
 ul li {
     list-style-position: inside;
@@ -114,6 +102,7 @@ nav a {
     text-decoration: none;
     color: #fff;
     font-weight: bold;
+    transition: 0.5s ease-in-out;
 }
 
 nav a:hover {
@@ -122,13 +111,8 @@ nav a:hover {
 
 /* Seções */
 
-#squirtle-novo {
-    padding: 35px;
-}
-
-#box-image-squirtle {
+#info-squirtle div {
     display: flex;
-    flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
@@ -139,7 +123,20 @@ nav a:hover {
     align-self: center;
 }
 
-#curiosidades ul{
+img {
+    transition: 3s;
+}
+
+img:hover {
+    transform: rotate3d(4, 1, 1, 1080deg);
+    scale: 4;
+}
+
+#info-squirtle img:nth-of-type(2) {
+    padding: 35px;
+}
+
+#curiosidades ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -158,6 +155,7 @@ nav a:hover {
 
 #evolucao img {
     height: 150px;
+    width: 150px;
 }
 
 #evolucao figcaption {
@@ -174,6 +172,10 @@ article {
 
 /* Links */
 
+#recursos ul li a {
+    transition: 0.5s ease-in-out;
+}
+
 a[target='_blank'] {
     color: #4592c4;
     font-weight: bold;
@@ -186,19 +188,24 @@ a[target='_blank']:hover {
 /* Footer */
 
 footer {
-    display: flex;
-    flex-direction: column;
     background-color: #343a40;
     color: #fff;
     padding: 20px;
-    align-items: center;
     bottom: 0;
-    gap: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+footer p {
+    margin-bottom: 0;
 }
 
 footer a {
     text-decoration: none;
-    transition: color 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 footer a[href*='#'] {
@@ -215,4 +222,46 @@ footer a[href*='tel'] {
 
 footer a[href]:hover {
     opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: auto;
+        grid-column: 1;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #evolucao ul {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #evolucao figcaption {
+        font-size: 16px;
+    }
+
+    header h1 {
+        font-size: 20px;
+    }
+
+    section h2 {
+        font-size: 18px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: rotate3d(4, 1, 7, 1080deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate3d(1, 1, 1, 0deg);
+    }
 }
