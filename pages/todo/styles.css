@@ -1,0 +1,25 @@
+#form {
+    margin-top:10px;
+    width: 96vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+}
+
+div input{
+    width: 200px;
+    height: 30px;
+}
+
+div button{
+    height: 24px;
+    width: 120px;
+    background-color: #0074d9;
+    color: white;
+}
+
+header{
+    background-color: #333;
+}
