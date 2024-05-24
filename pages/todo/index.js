@@ -1,46 +1,40 @@
-const input = document.querySelector("#textToDo")
-const button = document.querySelector("button")
+const taskKey = '@tasks'
 
-var lista = []
+// Função para adicionar tarefa
+function addTask(event) {
+  event.preventDefault() // Evita o recarregamento da página
+  const taskId = new Date().getTime()
+  const taskList = document.querySelector('#taskList')
 
-button.addEventListener("click",(e)=>{
-    e.preventDefault()
+  const form = document.querySelector('#taskForm')
+  const formData = new FormData(form)
 
-    if(input.value != ""){
-        lista.push(input.value)
-        const p = document.createElement('p')
-        p.textContent = `${lista.length} - ${input.value}`
-    
-        const section = document.querySelector('#lista')
-    
-        section.appendChild(p)
-    
-        localStorage.setItem("toDoList", JSON.stringify(lista))
-    
-        input.value = ""
-    }else{
-        alert("VAI FAZER NADA??? FICOU LOUCO?")
-    }
+  const taskTitle = formData.get('title')
+  const taskDescription = formData.get('description')
 
-})
+  const li = document.createElement('li')
 
-function carregaLista(){
-    if (localStorage.getItem("toDoList")) {
-        lista = JSON.parse(localStorage.getItem("toDoList"))
+  li.id = taskId
+  li.innerHTML = `
+      <h2>${taskTitle}</h2>
+      <p>${taskDescription}</p>
+  `
 
-        for (let i = 0; i < lista.length ; i++){
-            
-            const p = document.createElement('p')
-            p.textContent = `${i + 1} - ${lista[i]}`
+  taskList.appendChild(li)
 
-            const section = document.querySelector('#lista')
+  // Salvar tarefas no localStorage
+  const tasks = JSON.parse(localStorage.getItem(taskKey)) || []
+  tasks.push({ title: taskTitle, description: taskDescription })
+  localStorage.setItem(taskKey, JSON.stringify(tasks))
 
-            section.appendChild(p)
-            
-        }
-    }
+  form.reset()
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    carregaLista()
+// Carregar tarefas do localStorage ao recarregar a página
+window.addEventListener('DOMContentLoaded', () => {
+  const tasks = JSON.parse(localStorage.getItem(taskKey)) || []
+  const taskList = document.querySelector('#taskList')
+  taskList.innerHTML = tasks
+    .map((task) => `<li><h2>${task.title}</h2><p>${task.description}</p></li>`)
+    .join('')
 })
